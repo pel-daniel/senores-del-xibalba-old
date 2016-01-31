@@ -1,4 +1,9 @@
 var properties = {
+  ball: {
+    angle: -60,
+    startX: 65,
+    speed: 300,
+  },
   board: {
     width: 800,
     height: 400,
@@ -36,6 +41,9 @@ mainState.prototype = {
 
   create: function () {
     this.initGraphics();
+    this.initPhysics();
+
+    game.input.onDown.add(this.startGame, this);
   },
 
   update: function () {
@@ -47,7 +55,7 @@ mainState.prototype = {
     // this.backgroundGraphics.lineStyle(2, 0xFFFFFF, 1);
 
     this.ballSprite = game.add.sprite(
-      game.world.centerX,
+      properties.ball.startX,
       game.world.centerY,
       graphicAssets.ball.name
     );
@@ -66,6 +74,25 @@ mainState.prototype = {
       graphicAssets.player.name
     );
     this.rightPlayerSprite.anchor.set(0.5, 0.5);
+  },
+
+  initPhysics: function() {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.enable(this.ballSprite, Phaser.Physics.ARCADE);
+
+    this.ballSprite.checkWorldBounds = true;
+    this.ballSprite.body.collideWorldBounds = true;
+    this.ballSprite.body.immovable = true;
+    this.ballSprite.body.bounce.set(1);
+  },
+
+  startGame: function () {
+    game.input.onDown.remove(this.startGame, this);
+    game.physics.arcade.velocityFromAngle(
+      properties.ball.angle,
+      properties.ball.speed,
+      this.ballSprite.body.velocity
+    );
   },
 };
 
