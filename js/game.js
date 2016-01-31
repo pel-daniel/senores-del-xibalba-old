@@ -1,6 +1,8 @@
 var properties = {
-  screenWidth: 800,
-  screenHeight: 400,
+  board: {
+    width: 800,
+    height: 400,
+  },
   leftPlayer: {
     x: 50,
   },
@@ -68,8 +70,8 @@ mainState.prototype = {
 };
 
 var game = new Phaser.Game(
-  properties.screenWidth,
-  properties.screenHeight,
+  properties.board.width,
+  properties.board.height,
   Phaser.AUTO,
   'gameDiv'
 );
