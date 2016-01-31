@@ -1,6 +1,6 @@
 var properties = {
-    screenWidth: 300,
-    screenHeight: 600,
+    screenWidth: 800,
+    screenHeight: 400,
 };
 
 var mainState = function(game) { };
